@@ -7,7 +7,9 @@
 </head>
 <body>
 
-
+<!-- keycode.info, website where you can get the key code for any keyboard key -->
+<!-- data-key: data attribute, when you make up a an attribute you put data-(you made up attribute) -->
+<!-- using the data-key attaribute to link the key to the sound -->
   <div class="keys">
     <div data-key="65" class="key">
       <kbd>A</kbd>
@@ -58,7 +60,32 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+function playSound(e) {
+  // is there an element on the page that has the data key 65
+  // querySelector for one, looking for many is querySelectorAll
+  const audio = document.querySelector(`audio[data-key = '${e.keyCode}']`)
+  const key = document.querySelector(`.key[data-key = '${e.keyCode}']`)
+  if(!audio) return // stops function from running when audio is not working
+  audio.currentTime = 0 //rewind to the start, allows multiple sounds to be played in sucession
+  audio.play() //after selecting the correct audio you can play it, only plays when an audio is not playing (prevents multiple sounds playing at once) -- if ht eprevious line does not exist
+  //same as using jQuery key.addClass('playing')
+  // can has classList.add, .remove or .toggle
+  key.classList.add('playing') //adds the css class
+  //use a transition end event, listen on each key for when the event ends  
+}
 
+function removeTransition (e) {
+  // e gives us all the css properties that transitioned when the key was clicked. we only want to look at the transform property
+  if(e.propertyName !== 'transform') return //skip if its not the property we're lookign at
+  // this, can console.log to see what its equal to, this is equal to what is called against it
+  this.classList.remove('playing')
+}
+
+  const keys = document.querySelectorAll('.key') 
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+  // First listen for the key up event, get the element you are listening for and add an event listener
+  // event is just an object full of data describing what happened
+  window.addEventListener('keydown', playSound)
 </script>
 
 
