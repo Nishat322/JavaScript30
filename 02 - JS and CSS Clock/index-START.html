@@ -83,7 +83,7 @@
       const secondsDegrees = ((seconds/60) * 360) + 90 // calculates the degrees per second
       const minutesDegrees = ((minutes/60) * 360) + 90 //additional 90 to account for the default 90 we put originally
       const hoursDegrees = ((hours/12) * 360) + 90
-      secondHand.style.transform = `rotate(${secondsDegrees}deg)`
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)` //selects the css
       minuteHand.style.transform = `rotate(${minutesDegrees}deg)`
       hourHand.style.transform = `rotate(${hoursDegrees}deg)`
     }
